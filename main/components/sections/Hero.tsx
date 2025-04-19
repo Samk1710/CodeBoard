@@ -19,7 +19,7 @@ export function Hero() {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          AIgnite
+          Code Board
         </motion.h1>
         <motion.p 
           className="text-xl md:text-2xl text-gray-300 mb-8"

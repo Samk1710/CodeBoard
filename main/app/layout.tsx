@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Body } from "@/components/layout/Body";
+import { Navbar } from "@/components/layout/Navbar";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AIgnite",
+  title: "Code Board",
   description: "Transform repository knowledge into instant developer insights",
 };
 
@@ -25,7 +26,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <Body>{children}</Body>
+      <Body>
+        <Navbar />
+        {children}
+      </Body>
     </html>
   );
 }

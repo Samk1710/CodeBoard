@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { CodeBracketIcon, StarIcon, ForkIcon } from '@heroicons/react/24/outline'
+import { CodeBracketIcon, StarIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
 
 interface Repository {
   id: number
@@ -78,9 +78,9 @@ export default function RepositoriesPage() {
           <h1 className="text-4xl font-bold text-white mb-4">
             Your GitHub Repositories
           </h1>
-          <p className="text-gray-400 text-lg">
-            Select a repository to analyze with AIgnite
-          </p>
+          <h2 className="text-2xl font-semibold mb-4">
+            Select a repository to analyze with Code Board
+          </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -115,7 +115,7 @@ export default function RepositoriesPage() {
                   <span>{repo.stargazers_count}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <ForkIcon className="h-4 w-4" />
+                  <ArrowPathIcon className="h-4 w-4" />
                   <span>{repo.forks_count}</span>
                 </div>
               </div>
