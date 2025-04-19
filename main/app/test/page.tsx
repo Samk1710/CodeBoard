@@ -93,7 +93,24 @@ export default function TestPage() {
   const [repoInfo, setRepoInfo] = useState<RepoInfo | null>(null)
   const [fileStructure, setFileStructure] = useState<FileStructure[]>([])
   const [loading, setLoading] = useState(true)
+  const [analyzing, setAnalyzing] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  const handleAnalyze = async () => {
+    if (!repoInfo) return;
+    try {
+      setAnalyzing(true);
+      const repoPath = encodeURIComponent(`${repoInfo.owner.login}/${repoInfo.name}`);
+      
+      // Pre-fetch the analysis to ensure it's ready when we navigate
+      await fetch(`/api/analysis/insights?repo=${repoPath}&role=developer`);
+      
+      router.push(`/dashboard/${repoPath}/insights?role=developer`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to analyze repository');
+      setAnalyzing(false);
+    }
+  }
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -207,6 +224,20 @@ export default function TestPage() {
                 </div>
               )}
             </div>
+            <button
+              onClick={handleAnalyze}
+              disabled={analyzing}
+              className={`mt-4 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2`}
+            >
+              {analyzing ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Analyzing...
+                </>
+              ) : (
+                'Analyze'
+              )}
+            </button>
           </div>
         )}
 

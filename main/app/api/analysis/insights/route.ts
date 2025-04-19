@@ -24,13 +24,18 @@ export async function GET(request: NextRequest) {
     if (!session.accessToken) {
       return NextResponse.json({ error: 'Access token not found' }, { status: 401 });
     }
-    const repoInfo = parseGitHubUrl(`https://github.com/${repo}`);
+
+    // Ensure we're working with a decoded repository path
+    const decodedRepo = decodeURIComponent(repo);
+    const repoInfo = parseGitHubUrl(`https://github.com/${decodedRepo}`);
     const analysis = await analyzeCodebase(repoInfo, role, session.accessToken);
+    console.log('Analysis result:', analysis);
     return NextResponse.json(analysis);
   } catch (error: any) {
+    console.error('Analysis error:', error);
     return NextResponse.json(
       { error: error.message || 'Internal Server Error' },
       { status: 500 }
     );
   }
-} 
+}

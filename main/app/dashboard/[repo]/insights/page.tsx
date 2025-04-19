@@ -21,29 +21,69 @@ export default function InsightsPage() {
   const searchParams = useSearchParams();
   const [analysisData, setAnalysisData] = useState<AnalysisData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchAnalysis = async () => {
       try {
+        setLoading(true);
+        setError(null);
+        
+        // Decode the repo parameter since it was encoded in the URL
+        const decodedRepo = decodeURIComponent(params.repo as string);
+        
         const response = await fetch(
-          `/api/analysis/insights?repo=${params.repo}&role=${searchParams.get('role')}`
+          `/api/analysis/insights?repo=${encodeURIComponent(decodedRepo)}&role=${searchParams.get('role')}`
         );
+        
+        if (!response.ok) {
+          throw new Error(`Analysis failed: ${response.statusText}`);
+        }
+        
         const data = await response.json();
         setAnalysisData(data);
       } catch (error) {
         console.error('Error fetching analysis:', error);
+        setError(error instanceof Error ? error.message : 'Failed to fetch analysis');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchAnalysis();
+    if (params.repo && searchParams.get('role')) {
+      fetchAnalysis();
+    }
   }, [params.repo, searchParams]);
+
+  if (error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="rounded-lg bg-red-100 p-4 text-red-700">
+          <h2 className="text-lg font-semibold">Error</h2>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <div className="text-xl">Loading analysis...</div>
+        <div className="text-center">
+          <div className="mb-4">
+            <div className="h-12 w-12 animate-spin rounded-full border-4 border-purple-500 border-t-transparent"></div>
+          </div>
+          <div className="text-xl">Analyzing repository...</div>
+          <p className="mt-2 text-gray-500">This may take a few moments</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!analysisData) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-xl">No analysis data available</div>
       </div>
     );
   }
@@ -60,16 +100,16 @@ export default function InsightsPage() {
         </TabsList>
 
         <TabsContent value="summary">
-          <SummaryCard summary={analysisData?.summary || ''} />
+          <SummaryCard summary={analysisData.summary} />
         </TabsContent>
 
         <TabsContent value="hotspots">
-          <HotspotMap hotspots={analysisData?.hotspots || []} />
+          <HotspotMap hotspots={analysisData.hotspots} />
         </TabsContent>
 
         <TabsContent value="recommendations">
           <div className="space-y-4">
-            {analysisData?.recommendations.map((rec, index) => (
+            {analysisData.recommendations.map((rec, index) => (
               <div key={index} className="rounded-lg bg-white p-4 shadow">
                 <p className="text-gray-700">{rec}</p>
               </div>
@@ -79,4 +119,4 @@ export default function InsightsPage() {
       </Tabs>
     </div>
   );
-} 
+}

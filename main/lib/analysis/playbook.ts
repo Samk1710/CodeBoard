@@ -1,9 +1,9 @@
 import { Octokit } from '@octokit/rest';
-import OpenAI from 'openai';
+import Groq from 'groq-sdk';
 import { RepoInfo } from '@/lib/github';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY,
 });
 
 export async function analyzeConventions(
@@ -47,7 +47,7 @@ export async function analyzeConventions(
     )
     .join('\n\n');
 
-  // Generate conventions using OpenAI
+  // Generate conventions using Groq
   const prompt = `As a ${role}, analyze these pull request reviews and identify team conventions and practices:
 
 ${reviewText}
@@ -74,14 +74,14 @@ Format the response as a JSON array of objects with these fields:
   "source": string
 }`;
 
-  const completion = await openai.chat.completions.create({
+  const completion = await groq.chat.completions.create({
     messages: [{ role: 'user', content: prompt }],
-    model: 'gpt-4',
-    response_format: { type: 'json_object' },
+    model: 'mixtral-8x7b-32768',
+    response_format: { type: 'json_object' }
   });
 
   const response = completion.choices[0].message.content;
   const conventions = JSON.parse(response || '{"conventions": []}').conventions;
 
   return conventions;
-} 
+}

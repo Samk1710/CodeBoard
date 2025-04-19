@@ -1,9 +1,9 @@
 import { Octokit } from '@octokit/rest';
-import OpenAI from 'openai';
+import Groq from 'groq-sdk';
 import { RepoInfo } from '@/lib/github';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY,
 });
 
 const octokit = new Octokit();
@@ -55,7 +55,7 @@ export async function analyzeCodebase(
     .sort((a, b) => b.score - a.score)
     .slice(0, 10);
 
-  // Generate summary using OpenAI
+  // Generate summary using Groq
   const prompt = `As a ${role}, analyze this GitHub repository:
 Repository: ${repoInfo.owner}/${repoInfo.repo}
 Recent Commits: ${commits.data.length}
@@ -70,35 +70,41 @@ Provide a comprehensive summary focusing on:
 
 Format the response as a clear, structured summary.`;
 
-  const completion = await openai.chat.completions.create({
+  const completion = await groq.chat.completions.create({
     messages: [{ role: 'user', content: prompt }],
-    model: 'gpt-4',
+    model: process.env.GROQ_MODEL || 'mixtral-8x7b-32768',
   });
 
   const summary = completion.choices[0].message.content || '';
 
   // Generate role-specific recommendations
-  const recommendationsPrompt = `As a ${role}, provide specific recommendations for this repository based on:
+  const recommendationsPrompt = `As a ${role}, provide 3-5 specific recommendations for this repository based on:
 1. Code organization
 2. Best practices
 3. Potential improvements
 4. Common pitfalls to avoid
 
-Format as a bulleted list.`;
+Format EXACTLY as follows, with each recommendation on a new line starting with '- ':
+- First recommendation
+- Second recommendation
+- Third recommendation`;
 
-  const recommendationsCompletion = await openai.chat.completions.create({
+  const recommendationsCompletion = await groq.chat.completions.create({
     messages: [{ role: 'user', content: recommendationsPrompt }],
-    model: 'gpt-4',
+    model: process.env.GROQ_MODEL || 'mixtral-8x7b-32768',
   });
-
   const recommendations = recommendationsCompletion.choices[0].message.content
     ?.split('\n')
     .filter((line) => line.trim().startsWith('-'))
-    .map((line) => line.trim().substring(1).trim()) || [];
+    .map((line) => line.trim().substring(2).trim())
+    .filter(Boolean) || ['No specific recommendations available'];
+
+
+  const uniqueRecommendations = Array.from(new Set(recommendations));
 
   return {
     hotspots,
     summary,
-    recommendations,
+    recommendations: uniqueRecommendations,
   };
-} 
+}
