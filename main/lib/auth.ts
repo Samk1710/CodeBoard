@@ -1,14 +1,21 @@
 import { NextAuthOptions } from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
+import { DefaultSession } from 'next-auth'
+
+declare module 'next-auth' {
+  interface Session extends DefaultSession {
+    accessToken?: string
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
       authorization: {
         params: {
-          scope: 'read:user repo',
+          scope: 'read:user user:email repo',
         },
       },
     }),
@@ -21,11 +28,13 @@ export const authOptions: NextAuthOptions = {
       return token
     },
     async session({ session, token }) {
-      session.accessToken = token.accessToken
+      session.accessToken = token.accessToken as string
       return session
     },
   },
+  debug: true,
   pages: {
-    signIn: '/',
+    signIn: '/signin',
+    error: '/signin',
   },
-} 
+}

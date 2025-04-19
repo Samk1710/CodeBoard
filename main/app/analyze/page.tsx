@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { Tree, Folder, File } from '../../components/magicui/file-tree'
+import { Tree, Folder, File } from '@/components/magicui/file-tree'
 
 interface RepoInfo {
   name: string
@@ -29,64 +29,6 @@ interface FileStructure {
   download_url?: string
 }
 
-function FileItem({ file, level = 0 }: { file: FileStructure; level?: number }) {
-  const indent = level * 20 // 20px per level
-  const isDirectory = file.type === 'dir'
-  
-  return (
-    <div
-      className="flex items-center gap-2 text-gray-300 hover:bg-gray-700 p-2 rounded"
-      style={{ marginLeft: `${indent}px` }}
-    >
-      {isDirectory ? '📁' : '📄'}
-      <span>{file.name}</span>
-      {!isDirectory && (
-        <span className="text-gray-500 text-sm">
-          ({Math.round((file.size || 0) / 1024)} KB)
-        </span>
-      )}
-    </div>
-  )
-}
-
-function FileStructureView({ files }: { files: FileStructure[] }) {
-  // Group files by their directory path
-  const groupedFiles = files.reduce((acc, file) => {
-    const pathParts = file.path.split('/')
-    const dirPath = pathParts.slice(0, -1).join('/')
-    
-    if (!acc[dirPath]) {
-      acc[dirPath] = []
-    }
-    acc[dirPath].push(file)
-    return acc
-  }, {} as Record<string, FileStructure[]>)
-
-  // Sort files alphabetically
-  const sortedFiles = Object.entries(groupedFiles)
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([dir, files]) => ({
-      dir,
-      files: files.sort((a, b) => a.name.localeCompare(b.name))
-    }))
-
-  return (
-    <div className="space-y-1">
-      {sortedFiles.map(({ dir, files }) => (
-        <div key={dir}>
-          {files.map((file) => (
-            <FileItem
-              key={file.path}
-              file={file}
-              level={file.path.split('/').length - 1}
-            />
-          ))}
-        </div>
-      ))}
-    </div>
-  )
-}
-
 function convertToTreeElements(files: FileStructure[]): any[] {
   const root: any = {
     id: 'root',
@@ -101,7 +43,7 @@ function convertToTreeElements(files: FileStructure[]): any[] {
 
     pathParts.forEach((part, index) => {
       const isLast = index === pathParts.length - 1
-      const existingChild = current.children?.find(child => child.name === part)
+      const existingChild = current.children?.find((child: { name: string }) => child.name === part)
 
       if (existingChild) {
         current = existingChild
@@ -118,7 +60,7 @@ function convertToTreeElements(files: FileStructure[]): any[] {
     })
   })
 
-  return [root]
+  return root.children
 }
 
 function renderTreeElement(element: any) {
@@ -264,10 +206,7 @@ export default function AnalyzePage() {
         <div className="bg-gray-800 rounded-lg p-6">
           <h2 className="text-xl font-bold text-white mb-4">File Structure</h2>
           <div className="max-h-[600px] overflow-y-auto">
-            <Tree
-              className="overflow-hidden rounded-md bg-gray-800 p-2"
-              elements={convertToTreeElements(fileStructure)}
-            >
+            <Tree>
               {convertToTreeElements(fileStructure).map(renderTreeElement)}
             </Tree>
           </div>
@@ -275,4 +214,4 @@ export default function AnalyzePage() {
       </div>
     </div>
   )
-} 
+}

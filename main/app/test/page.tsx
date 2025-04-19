@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { Tree, Folder, File } from '@/components/magicui/file-tree'
 
 interface RepoInfo {
   name: string
@@ -26,6 +27,63 @@ interface FileStructure {
   type: 'file' | 'dir'
   size?: number
   download_url?: string
+}
+
+function convertToTreeElements(files: FileStructure[]): any[] {
+  const root: any = {
+    id: 'root',
+    isSelectable: true,
+    name: 'root',
+    children: []
+  }
+
+  files.forEach(file => {
+    const pathParts = file.path.split('/')
+    let current = root
+
+    pathParts.forEach((part, index) => {
+      const isLast = index === pathParts.length - 1
+      // Initialize children as an array if it's undefined and we need to add children
+      if (!current.children && !isLast) {
+        current.children = []
+      }
+      const existingChild = current.children?.find((child: { name: string }) => child.name === part)
+
+      if (existingChild) {
+        current = existingChild
+      } else {
+        const newChild = {
+          id: file.path,
+          isSelectable: true,
+          name: part,
+          children: !isLast ? [] : undefined
+        }
+        // Only push if we have a children array
+        if (current.children) {
+          current.children.push(newChild)
+        }
+        current = newChild
+      }
+    })
+  })
+
+  return root.children
+}
+
+function renderTreeElement(element: any) {
+  if (element.children) {
+    return (
+      <Folder key={element.id} element={element.name} value={element.id}>
+        {element.children.map(renderTreeElement)}
+      </Folder>
+    )
+  } else {
+    return (
+      <File key={element.id} value={element.id}>
+        {element.name}
+      </File>
+    )
+  }
 }
 
 export default function TestPage() {
@@ -154,24 +212,11 @@ export default function TestPage() {
 
         <div className="bg-gray-800 rounded-lg p-6">
           <h2 className="text-xl font-bold text-white mb-4">File Structure</h2>
-          <div className="space-y-2">
-            {fileStructure.map((file) => (
-              <div
-                key={file.path}
-                className="flex items-center gap-2 text-gray-300 hover:bg-gray-700 p-2 rounded"
-              >
-                {file.type === 'dir' ? '📁' : '📄'}
-                <span>{file.name}</span>
-                {file.type === 'file' && (
-                  <span className="text-gray-500 text-sm">
-                    ({Math.round((file.size || 0) / 1024)} KB)
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
+          <Tree>
+            {convertToTreeElements(fileStructure).map(renderTreeElement)}
+          </Tree>
         </div>
       </div>
     </div>
   )
-} 
+}
