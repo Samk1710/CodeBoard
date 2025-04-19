@@ -25,7 +25,7 @@ export function Navbar() {
                 Home
               </Link>
               <Link 
-                href="/repositories" 
+                href="/dashboard" 
                 className="text-gray-300 hover:text-white px-3 py-2 rounded-md hover:bg-gray-800 transition-colors"
               >
                 Repositories
@@ -46,7 +46,7 @@ export function Navbar() {
               </div>
             ) : (
               <Button
-                onClick={() => signIn('github', { callbackUrl: '/repositories' })}
+                onClick={() => signIn('github', { callbackUrl: '/dashboard' })}
                 className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
               >
                 Sign In
