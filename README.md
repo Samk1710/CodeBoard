@@ -1,6 +1,6 @@
-# AIgnite 🚀
+# CodeBoard 🚀
 
-AIgnite is an intelligent GitHub repository analysis platform that provides deep insights, code assessments, and development playbooks powered by AI. It helps developers and teams understand codebases better, identify patterns, and follow best practices.
+CodeBoard is an intelligent GitHub repository analysis platform that provides deep insights, code assessments, and development playbooks powered by AI. It helps developers and teams understand codebases better, identify patterns, and follow best practices.
 
 ## Features ✨
 
