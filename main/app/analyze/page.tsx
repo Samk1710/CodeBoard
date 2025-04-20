@@ -156,7 +156,7 @@ export default function AnalyzePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-900">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
       </div>
     )
@@ -164,51 +164,63 @@ export default function AnalyzePage() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-900">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
         <div className="text-red-500 text-xl">{error}</div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-8">
         {repoInfo && (
-          <div className="bg-gray-800 rounded-lg p-6 mb-8">
-            <div className="flex items-center gap-4 mb-4">
-              <img
-                src={repoInfo.owner.avatar_url}
-                alt={repoInfo.owner.login}
-                className="w-16 h-16 rounded-full"
-              />
-              <div>
-                <h1 className="text-2xl font-bold text-white">{repoInfo.name}</h1>
-                <p className="text-gray-400">by {repoInfo.owner.login}</p>
-              </div>
-            </div>
-            <p className="text-gray-300 mb-4">{repoInfo.description}</p>
-            <div className="flex gap-4 text-gray-400">
-              <div className="flex items-center gap-1">
-                <span>⭐ {repoInfo.stargazers_count}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <span>🔀 {repoInfo.forks_count}</span>
-              </div>
-              {repoInfo.language && (
-                <div className="flex items-center gap-1">
-                  <span>💻 {repoInfo.language}</span>
+          <div className="backdrop-blur-lg bg-white/5 rounded-2xl p-8 shadow-2xl border border-white/10 hover:border-purple-500/30 transition-all duration-300 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-6 mb-6">
+                <div className="relative">
+                  <img
+                    src={repoInfo.owner.avatar_url}
+                    alt={repoInfo.owner.login}
+                    className="w-20 h-20 rounded-full ring-4 ring-purple-500/30 transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute -bottom-1 -right-1 bg-green-500 w-4 h-4 rounded-full border-2 border-gray-900"></div>
                 </div>
-              )}
+                <div>
+                  <h1 className="text-3xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors duration-300">{repoInfo.name}</h1>
+                  <p className="text-gray-300">by {repoInfo.owner.login}</p>
+                </div>
+              </div>
+              <p className="text-gray-300 mb-6 text-lg">{repoInfo.description}</p>
+              <div className="flex gap-6 text-gray-300">
+                <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg hover:bg-white/10 transition-colors duration-300">
+                  <span className="text-yellow-400">⭐</span>
+                  <span>{repoInfo.stargazers_count}</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg hover:bg-white/10 transition-colors duration-300">
+                  <span className="text-purple-400">🔀</span>
+                  <span>{repoInfo.forks_count}</span>
+                </div>
+                {repoInfo.language && (
+                  <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg hover:bg-white/10 transition-colors duration-300">
+                    <span className="text-blue-400">💻</span>
+                    <span>{repoInfo.language}</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
 
-        <div className="bg-gray-800 rounded-lg p-6">
-          <h2 className="text-xl font-bold text-white mb-4">File Structure</h2>
-          <div className="max-h-[600px] overflow-y-auto">
-            <Tree>
-              {convertToTreeElements(fileStructure).map(renderTreeElement)}
-            </Tree>
+        <div className="backdrop-blur-lg bg-white/5 rounded-2xl p-8 shadow-2xl border border-white/10 hover:border-purple-500/30 transition-all duration-300 relative overflow-hidden group">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div className="relative z-10">
+            <h2 className="text-2xl font-bold text-white mb-6 group-hover:text-purple-400 transition-colors duration-300">File Structure</h2>
+            <div className="max-h-[600px] overflow-y-auto custom-scrollbar">
+              <Tree className="bg-white/5 rounded-lg p-4 border border-white/10">
+                {convertToTreeElements(fileStructure).map(renderTreeElement)}
+              </Tree>
+            </div>
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Tree, Folder, File } from '@/components/magicui/file-tree'
+import { FileIcon, FolderIcon, FileCodeIcon, FileTextIcon, FileImageIcon, FileJsonIcon, FileCogIcon, BinaryIcon } from 'lucide-react'
 
 interface RepoInfo {
   name: string
@@ -29,6 +30,54 @@ interface FileStructure {
   download_url?: string
 }
 
+function getFileIcon(name: string) {
+  const extension = name.split('.').pop()?.toLowerCase();
+  
+  switch (extension) {
+    case 'js':
+    case 'jsx':
+    case 'ts':
+    case 'tsx':
+    case 'py':
+    case 'java':
+    case 'cpp':
+    case 'c':
+    case 'go':
+    case 'rs':
+    case 'rb':
+    case 'php':
+    case 'swift':
+    case 'kt':
+    case 'dart':
+      return <FileCodeIcon className="w-4 h-4 text-blue-400" />;
+    case 'json':
+    case 'yaml':
+    case 'yml':
+      return <FileJsonIcon className="w-4 h-4 text-yellow-400" />;
+    case 'md':
+    case 'txt':
+    case 'log':
+      return <FileTextIcon className="w-4 h-4 text-gray-400" />;
+    case 'png':
+    case 'jpg':
+    case 'jpeg':
+    case 'gif':
+    case 'svg':
+      return <FileImageIcon className="w-4 h-4 text-green-400" />;
+    case 'env':
+    case 'config':
+    case 'conf':
+      return <FileCogIcon className="w-4 h-4 text-purple-400" />;
+    case 'exe':
+    case 'dll':
+    case 'so':
+    case 'dylib':
+      return <BinaryIcon className="w-4 h-4 text-red-400" />;
+    default:
+      return <FileIcon className="w-4 h-4 text-gray-400" />;
+  }
+}
+
 function convertToTreeElements(files: FileStructure[]): any[] {
   const root: any = {
     id: 'root',
@@ -43,7 +92,6 @@ function convertToTreeElements(files: FileStructure[]): any[] {
 
     pathParts.forEach((part, index) => {
       const isLast = index === pathParts.length - 1
-      // Initialize children as an array if it's undefined and we need to add children
       if (!current.children && !isLast) {
         current.children = []
       }
@@ -56,9 +104,9 @@ function convertToTreeElements(files: FileStructure[]): any[] {
           id: file.path,
           isSelectable: true,
           name: part,
+          type: isLast ? file.type : 'dir',
           children: !isLast ? [] : undefined
         }
-        // Only push if we have a children array
         if (current.children) {
           current.children.push(newChild)
         }
@@ -74,13 +122,20 @@ function renderTreeElement(element: any) {
   if (element.children) {
     return (
       <Folder key={element.id} element={element.name} value={element.id}>
+        <div className="flex items-center gap-2">
+          <FolderIcon className="w-4 h-4 text-yellow-400" />
+          <span className="text-gray-300">{element.name}</span>
+        </div>
         {element.children.map(renderTreeElement)}
       </Folder>
     )
   } else {
     return (
       <File key={element.id} value={element.id}>
-        {element.name}
+        <div className="flex items-center gap-2">
+          {getFileIcon(element.name)}
+          <span className="text-gray-300">{element.name}</span>
+        </div>
       </File>
     )
   }
@@ -243,9 +298,11 @@ export default function TestPage() {
 
         <div className="bg-gray-800 rounded-lg p-6">
           <h2 className="text-xl font-bold text-white mb-4">File Structure</h2>
-          <Tree>
-            {convertToTreeElements(fileStructure).map(renderTreeElement)}
-          </Tree>
+          <div className="border border-gray-700 rounded-lg p-4">
+            <Tree className="text-sm">
+              {convertToTreeElements(fileStructure).map(renderTreeElement)}
+            </Tree>
+          </div>
         </div>
       </div>
     </div>
