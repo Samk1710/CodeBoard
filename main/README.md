@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AIgnite 🚀
 
-## Getting Started
+AIgnite is an intelligent GitHub repository analysis platform that provides deep insights, code assessments, and development playbooks powered by AI. It helps developers and teams understand codebases better, identify patterns, and follow best practices.
 
-First, run the development server:
+## Features ✨
 
+- **Repository Analysis** - Get comprehensive insights about any GitHub repository
+  - Code hotspots and complexity analysis
+  - Language statistics and tech stack insights
+  - Development patterns and practices
+  - Architecture and code organization assessment
+  
+- **AI-Powered Chat** - Interactive chat interface to ask questions about repositories
+  - Query code structure and organization
+  - Get explanations about specific files or patterns
+  - Receive development recommendations
+  
+- **Development Playbook** - Extract team conventions and best practices
+  - Code style and formatting conventions
+  - Review and approval processes
+  - Testing requirements
+  - Documentation standards
+  - Branch naming and commit message conventions
+
+- **Team Assessment** - Evaluate code quality and development practices
+  - Task-based assessment system
+  - Language-specific feedback
+  - Improvement roadmaps
+  - Project-specific recommendations
+
+## Getting Started 🛠️
+
+1. Clone the repository
+```bash
+git clone <repository-url>
+cd AIgnite
+```
+
+2. Install dependencies
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. Set up environment variables by creating a `.env.local` file:
+```
+GITHUB_ID=your_github_oauth_client_id
+GITHUB_SECRET=your_github_oauth_client_secret
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_nextauth_secret
+GROQ_API_KEY=your_groq_api_key
+GITHUB_TOKEN=your_github_personal_access_token
+```
+
+4. Run the development server
 ```bash
 npm run dev
 # or
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to start using AIgnite!
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack 💻
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [Next.js](https://nextjs.org/) - React framework for production
+- [NextAuth.js](https://next-auth.js.org/) - Authentication for Next.js
+- [Groq](https://groq.com/) - AI model for code analysis
+- [TailwindCSS](https://tailwindcss.com/) - CSS framework
+- [Framer Motion](https://www.framer.com/motion/) - Animations
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [MongoDB](https://www.mongodb.com/) - Database
 
-## Learn More
+## Architecture 🏗️
 
-To learn more about Next.js, take a look at the following resources:
+The project follows a modern Next.js 13+ structure with:
+- `/app` - App router pages and API routes
+- `/components` - Reusable React components
+- `/lib` - Core business logic and utilities
+- `/public` - Static assets
+- `/functions` - Utility functions
+- `/api` - API route handlers
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributing 🤝
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## Deploy on Vercel
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License 📝
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[MIT License](https://opensource.org/licenses/MIT) - feel free to use this project for your own purposes.
