@@ -1,13 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ChevronRight, ChevronDown, File, Folder } from 'lucide-react';
+import { ChevronRight, ChevronDown, File, Folder, ExternalLink } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface FileNode {
   path: string;
   type: 'file' | 'dir';
   children?: FileNode[];
+  url?: string;
 }
 
 interface FileTreeProps {
@@ -44,6 +45,16 @@ export function FileTree({ repo }: FileTreeProps) {
     });
   };
 
+  const handleFileClick = (node: FileNode) => {
+    if (node.type === 'file' && repo) {
+      // Convert the repo URL to raw GitHub URL format
+      const repoPath = repo.replace('github.com', 'raw.githubusercontent.com').replace(/\.git$/, '');
+      const branch = 'main'; // You might want to make this dynamic
+      const fileUrl = `${repoPath}/${branch}/${node.path}`;
+      window.open(fileUrl, '_blank');
+    }
+  };
+
   const renderNode = (node: FileNode, level: number = 0) => {
     const isExpanded = expanded.has(node.path);
     const Icon = node.type === 'dir' ? Folder : File;
@@ -52,19 +63,20 @@ export function FileTree({ repo }: FileTreeProps) {
     return (
       <div key={node.path}>
         <div
-          className="flex items-center gap-2 py-1 hover:bg-muted"
+          className={`flex items-center gap-2 py-1 px-2 hover:bg-white/10 rounded ${
+            node.type === 'file' ? 'cursor-pointer' : ''
+          }`}
           style={{ paddingLeft: `${level * 1.5}rem` }}
+          onClick={() => node.type === 'file' ? handleFileClick(node) : toggleExpand(node.path)}
         >
           {node.type === 'dir' && (
-            <button
-              onClick={() => toggleExpand(node.path)}
-              className="flex h-6 w-6 items-center justify-center"
-            >
-              <Chevron className="h-4 w-4" />
-            </button>
+            <Chevron className="h-4 w-4 text-gray-400" />
           )}
-          <Icon className="h-4 w-4" />
-          <span className="text-sm">{node.path.split('/').pop()}</span>
+          <Icon className={`h-4 w-4 ${node.type === 'dir' ? 'text-yellow-400' : 'text-blue-400'}`} />
+          <span className="text-sm text-gray-200">{node.path.split('/').pop()}</span>
+          {node.type === 'file' && (
+            <ExternalLink className="h-3 w-3 text-gray-400 ml-auto" />
+          )}
         </div>
         {node.type === 'dir' && isExpanded && node.children && (
           <div>
@@ -76,10 +88,10 @@ export function FileTree({ repo }: FileTreeProps) {
   };
 
   return (
-    <ScrollArea className="h-[600px] rounded-md border">
+    <ScrollArea className="h-[calc(80vh-8rem)] rounded-md">
       <div className="p-2">
         {tree.map((node) => renderNode(node))}
       </div>
     </ScrollArea>
   );
-} 
+}

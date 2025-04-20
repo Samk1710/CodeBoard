@@ -214,6 +214,7 @@ export default function TestPage() {
       setRepoInfo(repoData)
 
       // Fetch file structure
+      console.log(`fetching from: /api/repo/structure?repo=${encodeURIComponent(repoUrl)}`)
       const structureResponse = await fetch(`/api/repo/structure?repo=${encodeURIComponent(repoUrl)}`)
       if (!structureResponse.ok) {
         throw new Error('Failed to fetch file structure')
