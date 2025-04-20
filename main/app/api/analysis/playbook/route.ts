@@ -21,6 +21,9 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    if (!session.accessToken) {
+      return NextResponse.json({ error: 'Access token not found' }, { status: 401 });
+    }
     const repoInfo = parseGitHubUrl(`https://github.com/${repo}`);
     const conventions = await analyzeConventions(repoInfo, role, session.accessToken);
     return NextResponse.json({ conventions });

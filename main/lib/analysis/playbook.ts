@@ -76,12 +76,15 @@ Format the response as a JSON array of objects with these fields:
 
   const completion = await groq.chat.completions.create({
     messages: [{ role: 'user', content: prompt }],
-    model: 'mixtral-8x7b-32768',
+    model: process.env.GROQ_MODEL || 'mixtral-8x7b-32768',
     response_format: { type: 'json_object' }
   });
 
   const response = completion.choices[0].message.content;
   const conventions = JSON.parse(response || '{"conventions": []}').conventions;
+
+
+  console.log('Extracted conventions:', conventions);
 
   return conventions;
 }
