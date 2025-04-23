@@ -1,101 +1,140 @@
-# CodeBoard 🚀
+![github-submission-banner](https://github.com/user-attachments/assets/a1493b84-e4e2-456e-a791-ce35ee2bcf2f)
 
-CodeBoard is an intelligent GitHub repository analysis platform that provides deep insights, code assessments, and development playbooks powered by AI. It helps developers and teams understand codebases better, identify patterns, and follow best practices.
+# 🚀 CodeBoard
 
-## Features ✨
+> AI-powered GitHub repository analysis platform for better code understanding and team collaboration.
 
-- **Repository Analysis** - Get comprehensive insights about any GitHub repository
-  - Code hotspots and complexity analysis
-  - Language statistics and tech stack insights
-  - Development patterns and practices
-  - Architecture and code organization assessment
-  
-- **AI-Powered Chat** - Interactive chat interface to ask questions about repositories
-  - Query code structure and organization
-  - Get explanations about specific files or patterns
-  - Receive development recommendations
-  
-- **Development Playbook** - Extract team conventions and best practices
-  - Code style and formatting conventions
-  - Review and approval processes
-  - Testing requirements
-  - Documentation standards
-  - Branch naming and commit message conventions
+---
 
-- **Team Assessment** - Evaluate code quality and development practices
-  - Task-based assessment system
-  - Language-specific feedback
-  - Improvement roadmaps
-  - Project-specific recommendations
+## 📌 Problem Statement
 
-## Getting Started 🛠️
+**Problem Statement 12 – Revolutionizing Developer Tools and Productivity**
 
-1. Clone the repository
+---
+
+## 🎯 Objective
+
+CodeBoard solves the challenge of understanding complex codebases and maintaining consistent development practices across teams. It serves developers, tech leads, and organizations by providing AI-powered insights, code analysis, and automated development playbooks.
+
+---
+
+## 🧠 Team & Approach
+
+### Team Name:  
+`AIgnite`
+
+### Team Members:  
+- [Add team member names and links]
+
+### Your Approach:  
+- Chose this problem to address the growing complexity of modern codebases
+- Key challenges addressed: code analysis automation, AI-powered insights, and team collaboration
+- Leveraged LLMs for intelligent code understanding and recommendation generation
+
+---
+
+## 🛠️ Tech Stack
+
+### Core Technologies Used:
+- Frontend: Next.js, TailwindCSS, Framer Motion
+- Backend: Next.js API routes
+- Database: MongoDB
+- AI/ML: Groq
+- Authentication: NextAuth.js
+- Language: TypeScript
+
+### Sponsor Technologies Used:
+- [✅] **Groq:** Used for real-time code analysis and intelligent chat responses
+- [ ] **Monad**
+- [ ] **Fluvio**
+- [ ] **Base**
+- [ ] **Screenpipe**
+- [ ] **Stellar**
+
+---
+
+## ✨ Key Features
+
+- ✅ **Repository Analysis** - Comprehensive GitHub repository insights
+- ✅ **AI-Powered Chat** - Interactive code querying interface
+- ✅ **Development Playbook** - Team conventions and best practices
+- ✅ **Team Assessment** - Code quality and practice evaluation
+
+---
+
+## 📽️ Demo & Deliverables
+
+- **Demo Video Link:** [To be added]
+- **Pitch Deck Link:** [To be added]
+
+---
+
+## ✅ Tasks & Bonus Checklist
+
+- [ ] All members completed mandatory social channel follows
+- [ ] Bonus Task 1 - Badge sharing completed
+- [ ] Bonus Task 2 - Sprint.dev signup completed
+
+---
+
+## 🧪 How to Run the Project
+
+### Requirements:
+- Node.js 18+ or newer
+- GitHub OAuth credentials
+- Groq API key
+- MongoDB instance
+
+### Local Setup:
 ```bash
+# Clone the repository
 git clone <repository-url>
 cd AIgnite
-```
 
-2. Install dependencies
-```bash
+# Install dependencies
 npm install
-# or
-yarn install
-# or
-pnpm install
-```
 
-3. Set up environment variables by creating a `.env.local` file:
-```
+# Set up environment variables in .env.local:
 GITHUB_ID=your_github_oauth_client_id
 GITHUB_SECRET=your_github_oauth_client_secret
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=your_nextauth_secret
 GROQ_API_KEY=your_groq_api_key
 GITHUB_TOKEN=your_github_personal_access_token
-```
 
-4. Run the development server
-```bash
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) with your browser to start using AIgnite!
+Open [http://localhost:3000](http://localhost:3000) to start using CodeBoard!
 
-## Tech Stack 💻
+---
 
-- [Next.js](https://nextjs.org/) - React framework for production
-- [NextAuth.js](https://next-auth.js.org/) - Authentication for Next.js
-- [Groq](https://groq.com/) - AI model for code analysis
-- [TailwindCSS](https://tailwindcss.com/) - CSS framework
-- [Framer Motion](https://www.framer.com/motion/) - Animations
-- [TypeScript](https://www.typescriptlang.org/) - Type safety
-- [MongoDB](https://www.mongodb.com/) - Database
+## 🧬 Future Scope
 
-## Architecture 🏗️
+- 📈 Integration with more code hosting platforms
+- 🛡️ Advanced security vulnerability detection
+- 🤖 Custom AI model training for specific codebases
+- 🌐 Support for multiple programming languages
 
-The project follows a modern Next.js 13+ structure with:
-- `/app` - App router pages and API routes
-- `/components` - Reusable React components
-- `/lib` - Core business logic and utilities
-- `/public` - Static assets
-- `/functions` - Utility functions
-- `/api` - API route handlers
+---
 
-## Contributing 🤝
+## 📎 Resources / Credits
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+- [Next.js](https://nextjs.org/)
+- [Groq](https://groq.com/)
+- [NextAuth.js](https://next-auth.js.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [MongoDB](https://www.mongodb.com/)
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+---
+
+## 🏁 Final Words
+
+Our team is passionate about improving developer productivity and code quality. Through CodeBoard, we aim to make codebases more accessible and maintainable for everyone.
+
+---
 
 ## License 📝
 
-[MIT License](https://opensource.org/licenses/MIT) - feel free to use this project for your own purposes.
+[MIT License](https://opensource.org/licenses/MIT)
