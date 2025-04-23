@@ -21,10 +21,13 @@ CodeBoard solves the challenge of understanding complex codebases and maintainin
 ## 🧠 Team & Approach
 
 ### Team Name:  
-`AIgnite`
+`HazardUs`
 
 ### Team Members:  
-- [Add team member names and links]
+- [Prayas Pal](https://github.com/Prayas-35)
+- [Swikriti Mukherjee](https://github.com/https://github.com/swikritimukherjee)
+- [Kaniska Mitra](https://github.com/https://github.com/Kaniska1)
+- [Shreyoshi Chaudhuri](https://github.com/shreyoshi2324)
 
 ### Your Approach:  
 - Chose this problem to address the growing complexity of modern codebases
@@ -71,9 +74,9 @@ CodeBoard solves the challenge of understanding complex codebases and maintainin
 
 ## ✅ Tasks & Bonus Checklist
 
-- [ ] All members completed mandatory social channel follows
-- [ ] Bonus Task 1 - Badge sharing completed
-- [ ] Bonus Task 2 - Sprint.dev signup completed
+- [✅] All members completed mandatory social channel follows
+- [✅] Bonus Task 1 - Badge sharing completed
+- [✅] Bonus Task 2 - Sprint.dev signup completed
 
 ---
 
@@ -134,7 +137,3 @@ Open [http://localhost:3000](http://localhost:3000) to start using CodeBoard!
 Our team is passionate about improving developer productivity and code quality. Through CodeBoard, we aim to make codebases more accessible and maintainable for everyone.
 
 ---
-
-## License 📝
-
-[MIT License](https://opensource.org/licenses/MIT)
