@@ -23,11 +23,6 @@ CodeBoard solves the challenge of understanding complex codebases and maintainin
 ### Team Name:  
 `HazardUs`
 
-### Team Members:  
-- [Prayas Pal](https://github.com/Prayas-35)
-- [Swikriti Mukherjee](https://github.com/https://github.com/swikritimukherjee)
-- [Kaniska Mitra](https://github.com/https://github.com/Kaniska1)
-- [Shreyoshi Chaudhuri](https://github.com/shreyoshi2324)
 
 ### Your Approach:  
 - Chose this problem to address the growing complexity of modern codebases
